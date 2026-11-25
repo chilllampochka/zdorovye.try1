@@ -1,6 +1,6 @@
 // Работа без интернета. При изменении файлов увеличьте номер версии.
-const CACHE = "karta-zdorovya-v1";
-const FILES = ["./", "./index.html", "./manifest.webmanifest", "./icon-192.png", "./icon-512.png", "./apple-touch-icon.png"];
+const CACHE = "karta-zdorovya-v30";
+const FILES = ["./", "./index.html", "./manifest.webmanifest", "./icon-192.png", "./icon-512.png", "./apple-touch-icon.png", "./bear-map.png"];
 
 self.addEventListener("install", e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(FILES)).then(() => self.skipWaiting()));
@@ -22,4 +22,25 @@ self.addEventListener("fetch", e => {
     if (r.ok || r.type === "opaque") { const copy = r.clone(); caches.open(CACHE).then(c => c.put(req, copy)); }
     return r;
   })));
+});
+
+// Уведомления: сервер присылает зашифрованное сообщение, телефон показывает его
+self.addEventListener("push", e => {
+  let d = {};
+  try { d = e.data ? e.data.json() : {}; } catch (_) { d = { body: e.data ? e.data.text() : "" }; }
+  e.waitUntil(self.registration.showNotification(d.title || "Плюшка", {
+    body: d.body || "Загляните в напоминания",
+    icon: "icon-192.png",
+    badge: "icon-192.png",
+    tag: d.tag || "remind",
+    data: { url: "./" },
+  }));
+});
+// Нажали на уведомление — открываем приложение
+self.addEventListener("notificationclick", e => {
+  e.notification.close();
+  e.waitUntil(clients.matchAll({ type: "window", includeUncontrolled: true }).then(list => {
+    for (const c of list) if ("focus" in c) return c.focus();
+    return clients.openWindow("./");
+  }));
 });

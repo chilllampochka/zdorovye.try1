@@ -1,43 +1,44 @@
 <!doctype html>
-<html lang="ru">
+<html lang="ru" data-theme="dark">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#0f7a68">
+<meta name="theme-color" content="#090f12">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="Здоровье">
+<meta name="apple-mobile-web-app-title" content="Плюшка">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="icon" type="image/png" href="icon-192.png">
-<title>Карта здоровья</title>
+<script>(function(){let t='dark';try{const v=localStorage.getItem('plushka-theme');if(v==='light'||v==='dark')t=v}catch(e){}document.documentElement.dataset.theme=t;document.querySelector('meta[name="theme-color"]').content=t==='dark'?'#090f12':'#eef3f1'})()</script><title>Плюшка</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700&family=Golos+Text:wght@400;500;600&display=swap">
 <style>
 /* Layout: одна колонка-«медкарта» с вкладками; карта тела — силуэт слева, панель органа справа (стопкой на телефоне) */
 :root{
-  --bg:#eef3f1; --paper:#ffffff; --ink:#15302b; --muted:#5d7570; --line:#d3e0dc;
-  --accent:#0f7a68; --accent-soft:#d8efe9;
+  --bg:#eef3f1; --paper:#ffffff; --ink:#1d2a33; --muted:#5d6f72; --line:#d6e0dd;
+  --accent:#6d3fd6; --accent-soft:#ebe3fb; --green:#0f7a68; --green-soft:#d8efe9;
   --ok:#2f8f5b; --warn:#c7811a; --bad:#c2453a; --info:#3b6fb6;
-  --zone:#cfe0db; --zone-hover:#9fcfc3;
+  --zone:#ddd2f4; --zone-hover:#c6b4ee;
+  --jelly:#b79cf2; --jelly-head:#c4adf5; --jelly-hover:#a587ee; --jelly-edge:#9a7ae0; --jelly-sel:#6d3fd6; --jelly-warn:#f5c46e; --jelly-bad:#ef8a80; --jelly-face:#3b1f5c;
   --f-display:"Unbounded","Golos Text",system-ui,sans-serif;
   --f-body:"Golos Text",system-ui,-apple-system,"Segoe UI",sans-serif;
 }
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
-  --bg:#0f1a18; --paper:#16241f; --ink:#e3efec; --muted:#93aaa4; --line:#2a3d38;
-  --accent:#4cc3a9; --accent-soft:#1d3a33; --ok:#5cc58b; --warn:#e2a54a; --bad:#ef7b70; --info:#7ea8e6;
-  --zone:#2b423c; --zone-hover:#3f6b60; color-scheme:dark}}
+:root{color-scheme:light}
 :root[data-theme="dark"]{
-  --bg:#0f1a18; --paper:#16241f; --ink:#e3efec; --muted:#93aaa4; --line:#2a3d38;
-  --accent:#4cc3a9; --accent-soft:#1d3a33; --ok:#5cc58b; --warn:#e2a54a; --bad:#ef7b70; --info:#7ea8e6;
-  --zone:#2b423c; --zone-hover:#3f6b60; color-scheme:dark}
+  --bg:#090f12; --paper:#121c20; --ink:#e6eeec; --muted:#9fb0ab; --line:#2a3d38;
+  --accent:#a98bf5; --accent-soft:#2f2550; --green:#4cc3a9; --green-soft:#142b28; --ok:#5cc58b; --warn:#e2a54a; --bad:#ef7b70; --info:#7ea8e6;
+  --zone:#3a2f55; --zone-hover:#4b3d70; --jelly:#8f72d8; --jelly-head:#9c80e0; --jelly-hover:#a58cec; --jelly-edge:#6d52b8; --jelly-sel:#c9b3ff; --jelly-warn:#d9a24a; --jelly-bad:#d9665b; --jelly-face:#22103a; color-scheme:dark}
 *{box-sizing:border-box}
 body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.5}
-.wrap{max-width:980px;margin:0 auto;padding-inline:16px;padding-block:20px 48px;display:grid;gap:18px}
+.wrap{max-width:980px;margin:0 auto;padding-inline:16px;padding-block:20px calc(110px + env(safe-area-inset-bottom,0px));display:grid;gap:18px}
 header{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px}
 h1{font-family:var(--f-display);font-weight:700;font-size:1.5rem;margin:0;letter-spacing:-.01em}
-h1 span{color:var(--accent)}
+.brand{display:flex;align-items:center;gap:12px}
+.brand .logo{width:44px;height:44px;flex:none;filter:drop-shadow(0 3px 6px rgba(15,122,104,.25))}
+.brand h1{line-height:1.05;color:var(--green)}
+.tagline{font-size:.8rem;color:var(--muted);letter-spacing:.02em}
 h2{font-family:var(--f-display);font-weight:500;font-size:1.05rem;margin:0;text-wrap:balance}
 .who{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
 select,input,textarea,button{font:inherit;color:inherit}
@@ -45,12 +46,96 @@ select,input[type=date],input[type=text],input[type=number],textarea{background:
 textarea{width:100%;min-height:80px;resize:vertical}
 button{cursor:pointer;border-radius:8px;border:1px solid var(--line);background:var(--paper);padding:7px 12px}
 button.primary{background:var(--accent);border-color:var(--accent);color:var(--paper);font-weight:600}
-button:focus-visible,select:focus-visible,input:focus-visible,textarea:focus-visible,.zone:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
-nav{display:flex;gap:4px;border-bottom:2px solid var(--line);overflow-x:auto}
-nav button{border:0;background:none;border-radius:0;padding:10px 14px;color:var(--muted);font-weight:600;border-bottom:3px solid transparent;margin-bottom:-2px;white-space:nowrap}
-nav button[aria-selected=true]{color:var(--ink);border-bottom-color:var(--accent)}
+button:focus-visible,select:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.tabbar{position:fixed;left:0;right:0;bottom:0;z-index:20;display:grid;grid-template-columns:repeat(5,1fr);background:color-mix(in srgb,var(--green-soft) 88%,transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-top:1px solid var(--line);padding:6px max(8px,env(safe-area-inset-right,0px)) calc(6px + env(safe-area-inset-bottom,0px)) max(8px,env(safe-area-inset-left,0px))}
+.tabbar button{position:relative;border:0;background:none;border-radius:12px;padding:6px 2px 4px;display:grid;justify-items:center;gap:3px;color:var(--muted);font-size:.66rem;font-weight:600;line-height:1.15;min-width:0;text-align:center}
+.tabbar svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;padding:2px 8px;box-sizing:content-box;border-radius:99px;transition:background .15s}
+.tabbar button[aria-selected=true]{color:var(--accent)}
+.tabbar button[aria-selected=true] svg{background:var(--accent-soft)}
+.tabbar .badge{position:absolute;top:2px;left:calc(50% + 10px);min-width:18px;height:18px;padding:0 5px;border-radius:99px;background:var(--bad);color:#fff;font-style:normal;font-size:.7rem;line-height:18px;font-variant-numeric:tabular-nums}
+@media (min-width:700px){.tabbar{left:50%;right:auto;transform:translateX(-50%);bottom:16px;width:620px;border:1px solid var(--line);border-radius:20px;box-shadow:0 8px 24px rgba(0,0,0,.08);padding-bottom:6px}}
+.news{background:var(--accent-soft);border:1px solid color-mix(in srgb,var(--accent) 35%,transparent);border-radius:14px;padding:14px 16px;display:grid;gap:8px}
+.news b{font-family:var(--f-display);font-weight:500;font-size:1rem;color:var(--accent)}
+.news p{margin:0;font-size:.92rem}.news ul{margin:0;padding-left:20px;font-size:.92rem}
+.news .row{gap:8px}
+.chk-group{display:grid;gap:10px}.chk-group+.chk-group{margin-top:14px}
+.chk-gh{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 10px;padding:0 2px}
+.chk-gh h3{margin:0;font-family:var(--f-display);font-weight:500;font-size:.95rem;color:var(--accent)}
+.met-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,340px),1fr));gap:12px;align-items:start}
+.met{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:14px 16px;display:grid;gap:10px;min-width:0}
+.met-top{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.met-top b{font-size:1.02rem}
+.met-val{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+.met-val strong{font-family:var(--f-display);font-weight:500;font-size:1.7rem;font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+.met-val .unit{color:var(--muted);font-size:.85rem}
+.met-val .delta{font-size:.82rem;font-weight:600;font-variant-numeric:tabular-nums;color:var(--muted)}
+.met .ref{font-size:.8rem;color:var(--muted);margin:0}
+.chart{width:100%;height:auto;display:block;overflow:visible}
+.chart .gl{stroke:var(--line);stroke-width:1}
+.chart .ax{stroke:var(--muted);stroke-width:1;opacity:.5}
+.chart text{font-size:10px;fill:var(--muted);font-family:var(--f-body);font-variant-numeric:tabular-nums}
+.chart .ty{text-anchor:end;dominant-baseline:middle}
+.chart .band{fill:var(--green);opacity:.12}
+.chart .thr{stroke:var(--green);stroke-width:1.2;stroke-dasharray:4 4}
+.chart .tb{fill:var(--green);font-size:9.5px;font-weight:600;paint-order:stroke;stroke:var(--paper);stroke-width:3px;stroke-linejoin:round}
+.chart .l-p1{fill:none;stroke:var(--accent);stroke-width:2;stroke-linejoin:round;stroke-linecap:round}
+.chart .l-p2{fill:none;stroke:var(--warn);stroke-width:2;stroke-linejoin:round;stroke-linecap:round}
+.chart .p1{fill:var(--accent);stroke:var(--paper);stroke-width:1.5}
+.chart .p2{fill:var(--warn);stroke:var(--paper);stroke-width:1.5}
+.leg{display:flex;gap:14px;font-size:.78rem;color:var(--muted)}
+.leg i{display:inline-block;width:12px;height:3px;border-radius:2px;margin-right:5px;vertical-align:middle}
+.leg .k1{background:var(--accent)}.leg .k2{background:var(--warn)}
+.per{display:flex;flex-wrap:wrap;gap:4px}
+.per button{padding:4px 10px;font-size:.78rem;border-radius:99px;color:var(--muted)}
+.per button[aria-pressed=true]{background:var(--accent);border-color:var(--accent);color:var(--paper);font-weight:600}
+.spark .ln{fill:none;stroke:var(--accent);stroke-width:2;stroke-linejoin:round;stroke-linecap:round}
+.spark .ln2{fill:none;stroke:var(--green);stroke-width:2;stroke-linejoin:round;stroke-linecap:round}
+.spark .area{fill:var(--accent);opacity:.1}
+.spark .grid{stroke:var(--line);stroke-width:1}
+.spark .pt{stroke:var(--accent);stroke-width:7;stroke-linecap:round}.spark .pt2{stroke:var(--green);stroke-width:7;stroke-linecap:round}
+.spark *{vector-effect:non-scaling-stroke}
+.met form{display:flex;flex-wrap:wrap;gap:8px;align-items:end}
+.met form label{display:grid;gap:3px;font-size:.75rem;color:var(--muted)}
+.met form input[type=number]{width:84px}
+.met form input[type=date]{width:150px}
+.met details summary{cursor:pointer;font-size:.85rem;color:var(--muted);font-weight:600}
+.hist{list-style:none;margin:8px 0 0;padding:0;display:grid;gap:4px;font-size:.88rem;font-variant-numeric:tabular-nums}
+.hist li{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:4px 0;border-bottom:1px solid var(--line)}
+.hist button{padding:2px 8px;font-size:.8rem}
+.empty-met{font-size:.88rem;color:var(--muted);margin:0}
+.push{background:var(--green-soft);border-radius:12px;padding:12px 14px;display:grid;gap:6px;margin-bottom:12px}
+.push b{font-weight:600}.push p{margin:0}.push .row{gap:8px}
+.scan{background:var(--paper);border:1px dashed color-mix(in srgb,var(--accent) 50%,var(--line));border-radius:12px;padding:14px 16px;display:grid;gap:12px;margin-bottom:12px}
+.scan-head{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;justify-content:space-between}.scan-head>div{flex:1 1 240px;min-width:0}.scan-head p{margin:2px 0 0}
+.btn{display:inline-block;cursor:pointer;border-radius:8px;border:1px solid var(--line);background:var(--paper);padding:7px 14px;font-weight:600}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--paper)}
+.scan-prog{display:grid;gap:6px;font-size:.88rem;color:var(--muted)}
+.scan-bar{height:6px;border-radius:99px;background:var(--line);overflow:hidden}.scan-bar i{display:block;height:100%;background:var(--accent);width:0;transition:width .2s}
+.scan-res{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:start}
+.scan-res img{width:84px;border-radius:8px;border:1px solid var(--line)}
+@media (max-width:420px){.scan-res{grid-template-columns:1fr}.scan-res img{width:120px}}
+.scan-rows{display:grid;gap:8px;min-width:0}
+.scan-row{display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-size:.92rem}
+.scan-row input[type=number]{width:84px}.scan-row b{min-width:110px}
+.scan details{font-size:.82rem;color:var(--muted)}.scan pre{white-space:pre-wrap;font-family:inherit;margin:6px 0 0;max-height:200px;overflow:auto}
+.cgroups{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,230px),1fr));gap:10px}
+.cgroup{border:1px solid var(--line);border-radius:10px;padding:8px 12px 10px;margin:0;display:grid;gap:6px;min-width:0}
+.cgroup legend{font-size:.78rem;font-weight:600;color:var(--green);padding:0 4px;text-transform:uppercase;letter-spacing:.05em}
+.cgroup label{display:flex;gap:8px;align-items:center;font-size:.92rem}
+.chk-intro{display:grid;gap:4px;margin-bottom:12px}.chk-intro .note{margin:0}
+.chk{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:14px 16px;display:grid;gap:8px}
+.chk-top{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap}
+.chk-top b{font-size:1.02rem}
+.chk .tag{font-size:.75rem;font-weight:600;color:var(--green);background:var(--green-soft);border-radius:99px;padding:2px 9px;white-space:nowrap}
+.chk p{margin:0;font-size:.9rem}
+.chk .how{font-size:.88rem;background:var(--bg);border-radius:8px;padding:8px 10px}
+.chk .how b{font-weight:600}
+.chk .ctl{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.chk.done{opacity:.8}
+.chk-more{margin-top:14px}.chk-more summary{cursor:pointer;color:var(--muted);font-weight:600;padding:6px 0}
+.chk-more .list{margin-top:8px}
 .note{font-size:.85rem;color:var(--muted)}
-.banner{background:var(--accent-soft);border-radius:10px;padding:10px 14px;display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;font-size:.9rem}
+.banner{background:var(--green-soft);border-radius:10px;padding:10px 14px;display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;font-size:.9rem}
 /* reminders */
 .list{display:grid;gap:10px}
 .rem{background:var(--paper);border:1px solid var(--line);border-left:5px solid var(--muted);border-radius:10px;padding:14px 16px;display:grid;grid-template-columns:1fr auto;gap:6px 16px;align-items:start}
@@ -68,13 +153,36 @@ nav button[aria-selected=true]{color:var(--ink);border-bottom-color:var(--accent
 .map{display:grid;grid-template-columns:minmax(220px,300px) 1fr;gap:20px;align-items:start}
 @media (max-width:680px){.map{grid-template-columns:1fr}}
 .fig{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:12px;display:grid;justify-items:center}
-.fig svg{width:100%;max-width:260px;height:auto}
-.zone{fill:var(--zone);stroke:var(--bg);stroke-width:3;cursor:pointer;transition:fill .15s}
-.zone:hover{fill:var(--zone-hover)}
-.zone.sel{fill:var(--accent)}
-.zone.has-complaint{fill:color-mix(in srgb,var(--warn) 55%,var(--zone))}
-.zone.has-chronic{fill:color-mix(in srgb,var(--bad) 55%,var(--zone))}
-.zone.sel.has-complaint,.zone.sel.has-chronic{stroke:var(--accent);stroke-width:4}
+.fig svg{width:100%;max-width:240px;height:auto;overflow:visible}
+.zone{cursor:pointer;outline:none}
+.zone .b{fill:var(--jelly);opacity:.92;stroke:var(--jelly-edge);stroke-width:1.5;transition:fill .2s,stroke .2s}
+.zone[data-zone=head] .b{fill:var(--jelly-head)}
+.zone .gl{fill:url(#jel);pointer-events:none}
+.zone:hover .b{fill:var(--jelly-hover)}
+.zone.has-complaint .b{fill:var(--jelly-warn)}
+.zone.has-chronic .b{fill:var(--jelly-bad)}
+.zone.sel .b{fill:var(--jelly-sel);stroke:var(--accent);stroke-width:3}
+.zone.sel.has-complaint .b{fill:var(--jelly-warn)}
+.zone.sel.has-chronic .b{fill:var(--jelly-bad)}
+.zone:focus-visible .b{stroke:var(--accent);stroke-width:4}
+.jelly .ground{fill:var(--ink);opacity:.08}
+.jelly .shine path{fill:none;stroke:#fff;stroke-width:5;stroke-linecap:round;opacity:.7;pointer-events:none}
+.jelly .face{pointer-events:none}
+.jelly .eye{fill:var(--jelly-face)}
+.jelly .mouth{fill:none;stroke:var(--jelly-face);stroke-width:3;stroke-linecap:round}
+.jelly .cheek{fill:#f28b8b;opacity:.45}
+.jelly path,.jelly rect,.jelly circle{stroke-linejoin:round}
+@media (prefers-reduced-motion:no-preference){.zone.sel .b{animation:wob .45s ease-out}}
+@keyframes wob{0%{transform:scale(1)}40%{transform:scale(1.03)}100%{transform:scale(1)}}
+.zone .b{transform-box:fill-box;transform-origin:center}
+.systems{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:16px;display:grid;gap:12px;margin-top:20px}
+.sys-head{display:grid;gap:2px}.sys-head .note{margin:0}
+.sys-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px}
+.sys{display:grid;grid-template-columns:auto 1fr;gap:2px 10px;align-items:center;text-align:left;padding:10px 12px;border-radius:10px;border:1px solid var(--line);background:var(--green-soft)}
+.sys .dot{grid-row:1/3;width:10px;height:10px;align-self:start;margin-top:6px}
+.sys b{font-weight:600}.sys small{color:var(--muted);font-size:.78rem;line-height:1.3}
+.sys[aria-pressed=true]{border-color:var(--accent);background:var(--accent-soft)}
+.sys:hover{border-color:var(--accent)}
 .legend{display:flex;flex-wrap:wrap;gap:10px;font-size:.8rem;color:var(--muted);margin-top:8px}
 .legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:4px;vertical-align:-1px}
 .panel{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:16px;display:grid;gap:14px;min-width:0}
@@ -95,8 +203,10 @@ nav button[aria-selected=true]{color:var(--ink);border-bottom-color:var(--accent
 .checks{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:8px}
 .checks label{display:flex;gap:8px;align-items:center}
 .row{display:flex;flex-wrap:wrap;gap:12px;align-items:end}
-.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:8px 16px;border-radius:99px;font-size:.9rem;opacity:0;transition:opacity .2s;pointer-events:none}
+.toast{position:fixed;z-index:30;left:50%;bottom:calc(84px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:8px 16px;border-radius:99px;font-size:.9rem;opacity:0;transition:opacity .2s;pointer-events:none}
 .toast.show{opacity:1}
+.toast.act.show{pointer-events:auto;display:flex;align-items:center;gap:14px;padding:6px 8px 6px 18px}
+.toast-btn{border:0;background:color-mix(in srgb,var(--bg) 18%,transparent);color:var(--bg);font-weight:700;border-radius:99px;padding:6px 14px}
 .confirm{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 
@@ -105,32 +215,41 @@ body{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset
 select,input,textarea{font-size:16px}
 [hidden]{display:none!important}
 img{max-width:100%}
+
+.theme-control{display:flex;align-items:center;justify-content:flex-end;gap:12px;color:var(--muted)}
+:root[data-theme="dark"] .tabbar{background:rgba(12,21,24,.96)}
+.bear-map{width:100%;max-width:390px;height:auto;display:block;margin:auto}
+.bear-map .zone .hit{fill:transparent;stroke:transparent;stroke-width:6;pointer-events:all;cursor:pointer;transition:fill .15s,stroke .15s}
+.bear-map .zone:hover .hit{fill:rgba(193,165,244,.15);stroke:var(--accent)}
+.bear-map .zone.sel .hit{fill:rgba(193,165,244,.12);stroke:var(--accent)}
+.bear-map .zone.has-complaint .hit{fill:rgba(245,183,64,.25);stroke:#edb34e}
+.bear-map .zone.has-chronic .hit{fill:rgba(232,99,99,.25);stroke:#eb7979}
+.bear-map .zone:focus-visible{outline:none}
+.bear-map .zone:focus-visible .hit{stroke:var(--ink);stroke-width:9;stroke-dasharray:12 8}
 </style>
 </head>
 <body>
 
 <div class="wrap">
   <header>
-    <h1>Карта <span>здоровья</span></h1>
+    <div class="brand"><svg class="logo" viewBox="0 0 64 64" aria-hidden="true"><defs><radialGradient id="lg" cx="36%" cy="28%" r="80%"><stop offset="0" stop-color="#fff"/><stop offset=".55" stop-color="#e6f6f1"/><stop offset="1" stop-color="#9fd4c6"/></radialGradient></defs><rect width="64" height="64" rx="15" fill="#0f7a68"/><path d="M28 12Q32 10 36 12Q38 13 38 17V25H46Q50 25 51 27Q53 32 51 37Q50 39 46 39H38V47Q38 51 36 52Q32 54 28 52Q26 51 26 47V39H18Q14 39 13 37Q11 32 13 27Q14 25 18 25H26V17Q26 13 28 12Z" fill="url(#lg)"/><ellipse cx="29.5" cy="17.5" rx="2" ry="3.6" fill="#fff" transform="rotate(-18 29.5 17.5)"/></svg><div><h1>Плюшка</h1><span class="tagline">карта здоровья семьи</span></div></div>
     <div class="who">
       <label for="userSel" class="note">Пользователь</label>
       <select id="userSel"></select>
       <button id="addUser">+ Добавить</button>
     </div>
-  </header>
+  </header><div class="theme-control"><label for="themeSelect">Тема оформления</label><select id="themeSelect"><option value="dark">Ночная</option><option value="light">Светлая</option></select></div><script>(function(){const el=document.getElementById('themeSelect');el.value=document.documentElement.dataset.theme;el.onchange=function(){document.documentElement.dataset.theme=el.value;document.querySelector('meta[name="theme-color"]').content=el.value==='dark'?'#090f12':'#eef3f1';try{localStorage.setItem('plushka-theme',el.value)}catch(e){}}})();</script>
 
   <div class="banner" id="demoBanner" hidden>
     <span>Сейчас показаны примерные данные, чтобы было видно, как всё работает.</span>
     <button id="resetDemo">Начать с чистого листа</button>
   </div>
 
-  <nav role="tablist">
-    <button role="tab" id="t-rem" aria-selected="true" data-tab="rem">Напоминания</button>
-    <button role="tab" id="t-map" aria-selected="false" data-tab="map">Карта тела</button>
-    <button role="tab" id="t-prof" aria-selected="false" data-tab="prof">Профиль</button>
-  </nav>
+
+  <div class="news" id="news" role="status" hidden></div>
 
   <section id="p-rem">
+    <div class="push" id="pushBox"></div>
     <div class="list" id="remList"></div>
     <p class="note">Интервалы примерные. Приложение не ставит диагнозы и не заменяет врача.</p>
   </section>
@@ -138,28 +257,60 @@ img{max-width:100%}
   <section id="p-map" hidden>
     <div class="map">
       <div class="fig">
-        <svg viewBox="0 0 200 420" role="group" aria-label="Силуэт человека">
-          <ellipse class="zone" data-zone="head" tabindex="0" cx="100" cy="42" rx="30" ry="36"><title>Голова</title></ellipse>
-          <rect class="zone" data-zone="neck" tabindex="0" x="88" y="76" width="24" height="18" rx="6"><title>Шея</title></rect>
-          <path class="zone" data-zone="chest" tabindex="0" d="M58 98 Q100 88 142 98 L146 170 L54 170 Z"><title>Грудная клетка</title></path>
-          <path class="zone" data-zone="belly" tabindex="0" d="M54 172 L146 172 L144 236 Q100 250 56 236 Z"><title>Живот</title></path>
-          <path class="zone" data-zone="arms" tabindex="0" d="M52 100 Q36 104 32 124 L18 220 Q16 232 26 234 Q34 234 36 222 L50 150 Z M148 100 Q164 104 168 124 L182 220 Q184 232 174 234 Q166 234 164 222 L150 150 Z"><title>Руки</title></path>
-          <path class="zone" data-zone="legs" tabindex="0" d="M58 240 Q78 250 98 250 L96 400 Q96 410 84 410 L72 410 Q64 408 66 396 Z M142 240 Q122 250 102 250 L104 400 Q104 410 116 410 L128 410 Q136 408 134 396 Z"><title>Ноги</title></path>
-        </svg>
+        <svg viewBox="115 185 790 1160" class="jelly bear-map" role="group" aria-label="Карта тела: выберите часть тела"><image href="bear-map.png" x="0" y="0" width="1024" height="1536" pointer-events="none"/><g class="zone" data-zone="head" tabindex="0" role="button" aria-label="Голова"><title>Голова</title><path class="hit" d="M382 642 C300 627 245 594 249 485 Q250 425 283 371 C205 336 235 235 308 213 Q372 196 409 256 Q513 214 616 256 C660 185 746 199 777 262 Q809 334 743 371 Q790 465 772 535 Q753 625 646 642 Q510 670 382 642 Z"/></g><g class="zone" data-zone="neck" tabindex="0" role="button" aria-label="Шея"><title>Шея</title><path class="hit" d="M383 642 Q510 667 646 642 L649 674 Q610 720 510 710 Q416 711 380 676 Z"/></g><g class="zone" data-zone="chest" tabindex="0" role="button" aria-label="Грудь"><title>Грудь</title><path class="hit" d="M380 674 Q342 684 301 713 Q369 788 320 885 Q512 787 703 885 Q660 786 724 713 Q679 685 649 674 Q611 722 510 710 Q415 711 380 674 Z"/></g><g class="zone" data-zone="belly" tabindex="0" role="button" aria-label="Живот"><title>Живот</title><path class="hit" d="M320 885 Q510 787 703 885 Q746 974 707 1038 Q514 1159 319 1038 Q277 978 320 885 Z"/></g><g class="zone" data-zone="arms" tabindex="0" role="button" aria-label="Руки"><title>Руки</title><path class="hit" d="M301 713 Q213 782 163 854 C102 958 198 999 267 924 L320 885 Q370 784 301 713 Z M724 713 Q810 779 862 854 C922 956 829 999 758 924 L703 885 Q660 784 724 713 Z"/></g><g class="zone" data-zone="legs" tabindex="0" role="button" aria-label="Ноги"><title>Ноги</title><path class="hit" d="M319 1038 Q405 1085 495 1097 Q460 1175 477 1250 C494 1320 435 1326 346 1325 C258 1325 248 1264 295 1227 Q286 1135 319 1038 Z M527 1097 Q622 1085 707 1038 Q738 1133 728 1227 C778 1264 764 1325 678 1325 C585 1326 532 1320 547 1250 Q563 1176 527 1097 Z"/></g></svg>
         <div class="legend">
-          <span><i style="background:var(--zone)"></i>нет жалоб</span>
-          <span><i style="background:color-mix(in srgb,var(--warn) 55%,var(--zone))"></i>есть жалобы</span>
-          <span><i style="background:color-mix(in srgb,var(--bad) 55%,var(--zone))"></i>хроническое</span>
+          <span><i style="background:var(--jelly)"></i>нет жалоб</span>
+          <span><i style="background:var(--jelly-warn)"></i>есть жалобы</span>
+          <span><i style="background:var(--jelly-bad)"></i>хроническое</span>
+          <span><i style="background:var(--jelly-sel)"></i>выбрано</span>
         </div>
       </div>
       <div class="panel" id="panel"></div>
     </div>
+    <div class="systems">
+      <div class="sys-head">
+        <h2>Системы организма</h2>
+        <p class="note">Они работают во всём теле сразу, поэтому их нет на картинке.</p>
+      </div>
+      <div class="sys-grid" id="sysGrid"></div>
+    </div>
+  </section>
+
+  <section id="p-met" hidden>
+    <div class="chk-intro">
+      <h2>Показатели</h2>
+      <p class="note">Записывайте замеры, чтобы видеть, как они меняются. Ориентиры даны для взрослых.</p>
+    </div>
+    <div class="scan" id="scanBox">
+      <div class="scan-head"><div><b>Распознать справку</b><p class="note">Сфотографируйте печатный бланк анализов или заключение врача. Приложение найдёт сахар, холестерин, давление, вес, дату и врача.</p></div>
+      <label class="btn primary" for="scanFile">Выбрать фото</label><input type="file" id="scanFile" accept="image/*" hidden></div>
+      <div id="scanOut"></div>
+    </div>
+    <div class="met-grid" id="metGrid"></div>
+    <p class="note">Ориентиры примерные. Если значение выходит за рамки, обсудите его с врачом.</p>
+  </section>
+
+  <section id="p-chk" hidden>
+    <div class="chk-intro">
+      <h2>Стоит проверить</h2>
+      <p class="note" id="chkHint"></p>
+    </div>
+    <div class="list" id="chkList"></div>
+    <details class="chk-more" id="chkDoneWrap"><summary id="chkDoneSum"></summary><div class="list" id="chkDone"></div></details>
+    <p class="note">Это общие советы, а не диагноз. Что именно проверять, решает врач.</p>
   </section>
 
   <section id="p-prof" hidden>
     <div class="card" id="profCard"></div>
   </section>
 </div>
+<nav role="tablist" class="tabbar" aria-label="Разделы">
+    <button role="tab" id="t-rem" aria-selected="true" data-tab="rem"><svg viewBox="0 0 24 24"><path d="M6 16V11a6 6 0 0 1 12 0v5l1.5 2h-15z"/><path d="M10 20a2 2 0 0 0 4 0"/></svg><span>Напоминания</span><i class="badge" id="remBadge" hidden></i></button>
+    <button role="tab" id="t-met" aria-selected="false" data-tab="met"><svg viewBox="0 0 24 24"><path d="M4 19h16"/><path d="M5 15l4-5 4 3 6-7"/><circle cx="19" cy="6" r="1.4"/></svg><span>Показатели</span></button>
+    <button role="tab" id="t-map" aria-selected="false" data-tab="map"><svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="2.6"/><path d="M8 10.5h8M12 9v6M12 15l-3 6M12 15l3 6M8 10.5 6 15M16 10.5l2 4.5"/></svg><span>Карта тела</span></button>
+    <button role="tab" id="t-chk" aria-selected="false" data-tab="chk"><svg viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6"/><path d="m15 15 5 5"/><path d="m8 10.5 2 2 3.5-3.5"/></svg><span>Проверить</span><i class="badge" id="chkBadge" hidden></i></button>
+    <button role="tab" id="t-prof" aria-selected="false" data-tab="prof"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.6"/><path d="M5 20c1-3.6 3.8-5.5 7-5.5s6 1.9 7 5.5"/></svg><span>Профиль</span></button>
+  </nav>
 <div class="toast" id="toast" role="status"></div>
 
 <script>
@@ -169,85 +320,113 @@ const ZONES={
   chest:{name:"Грудная клетка",organs:{heart:"Сердце",lungs:"Лёгкие",spine_c:"Позвоночник и осанка"}},
   belly:{name:"Живот",organs:{stomach:"Желудок",bowel:"Кишечник",liver:"Печень",kidneys:"Почки"}},
   arms:{name:"Руки",organs:{arm_joints:"Суставы рук",skin:"Кожа"}},
-  legs:{name:"Ноги",organs:{knees:"Колени",feet:"Стопы",leg_mus:"Мышцы ног"}}
+  legs:{name:"Ноги",organs:{knees:"Колени",feet:"Стопы",leg_mus:"Мышцы ног"}},
+  systems:{name:"Системы организма",organs:{nerves:"Нервная система",psyche:"Настроение и стресс",sleep:"Сон",immune:"Иммунитет и аллергии",hormones:"Гормоны",metab:"Обмен веществ и вес",blood:"Кровь и сосуды",msk:"Кости и мышцы"}}
 };
+const SYS_DESC={nerves:"Головные боли, головокружение, онемение, тики",psyche:"Тревога, плохое настроение, усталость от учёбы",sleep:"Трудно уснуть, часто просыпаюсь, не высыпаюсь",immune:"Часто болею, аллергия на еду, пыльцу или животных",hormones:"Рост, щитовидная железа, сахар в крови",metab:"Резко меняется вес, постоянная жажда или голод",blood:"Бледность, синяки, носовые кровотечения, анемия",msk:"Осанка, плоскостопие, боли в мышцах и суставах"};
 const ORGAN_NAME={};for(const z in ZONES)for(const o in ZONES[z].organs)ORGAN_NAME[o]=ZONES[z].organs[o];
 
-// Правила: всем — always; остальным — если отмечено в профиле (cond) или у органа есть жалобы
+// Правила: base(u) — базовое напоминание (возвращает причину или null); cond — галочка в профиле; organs — жалобы на карте
+// months — число или функция от пользователя; habit — не врач, а полезная привычка
+const ageOf=u=>u.birth?age(u.birth):null;
 const DOCTORS=[
-  {id:"dent",name:"Стоматолог",months:6,always:true},
-  {id:"ped",name:"Педиатр / терапевт",months:12,always:true},
-  {id:"oph",name:"Офтальмолог",months:12,cond:"vision",organs:["eyes"]},
+  {id:"dent",name:"Стоматолог",months:12,base:()=>"всем раз в год"},
+  {id:"ped",name:"Педиатр / терапевт",months:12,base:()=>"всем раз в год"},
+  {id:"oph",name:"Офтальмолог",months:u=>(ageOf(u)??0)>=18&&!u.conds.includes("vision")&&!["complaint","chronic"].includes(u.organs.eyes?.s)?24:12,base:u=>(ageOf(u)??0)>=18?"взрослым раз в 2 года":"детям раз в год",cond:"vision",organs:["eyes"]},
+  {id:"gyn",name:"Гинеколог",months:12,base:u=>u.sex==="f"&&ageOf(u)>=18?"женщинам с 18 лет раз в год":null},
+  {id:"uro",name:"Уролог",months:12,base:u=>u.sex==="m"&&ageOf(u)>=18?"мужчинам с 18 лет раз в год":null},
+  {id:"brush",name:"Сменить зубную щётку",months:3,habit:true,base:()=>"всем раз в 3 месяца"},
   {id:"ent",name:"ЛОР",months:12,cond:"ent",organs:["ears","nose","throat"]},
-  {id:"gastro",name:"Гастроэнтеролог",months:6,cond:"gi",organs:["stomach","bowel","liver"]},
-  {id:"cardio",name:"Кардиолог",months:12,cond:"heart",organs:["heart"]},
-  {id:"ortho",name:"Ортопед",months:12,cond:"posture",organs:["spine_n","spine_c","arm_joints","knees","feet"]},
+  {id:"gastro",name:"Гастроэнтеролог",months:12,cond:"gi",organs:["stomach","bowel","liver"]},
+  {id:"cardio",name:"Кардиолог",months:12,cond:["heart","hyper"],organs:["heart"]},
+  {id:"ortho",name:"Ортопед",months:12,cond:"posture",organs:["spine_n","spine_c","arm_joints","knees","feet","msk"]},
   {id:"derm",name:"Дерматолог",months:12,cond:"skin",organs:["skin"]},
-  {id:"neuro",name:"Невролог",months:12,cond:"neuro",organs:["brain"]},
-  {id:"endo",name:"Эндокринолог",months:12,cond:"endo",organs:["thyroid"]},
+  {id:"neuro",name:"Невролог",months:12,cond:["neuro","sleepd"],organs:["brain","nerves","sleep"]},
+  {id:"endo",name:"Эндокринолог",months:12,cond:["endo","diab"],organs:["thyroid","hormones","metab"]},
   {id:"neph",name:"Нефролог",months:12,organs:["kidneys"]},
   {id:"pulm",name:"Пульмонолог",months:12,cond:"asthma",organs:["lungs"]},
+  {id:"allergy",name:"Аллерголог-иммунолог",months:12,cond:"allergy",organs:["immune"]},
+  {id:"psych",name:"Психолог",months:12,cond:"anx",organs:["psyche"]},
+  {id:"hemat",name:"Гематолог",months:12,organs:["blood"]},
 ];
-const CONDS={vision:"Плохое зрение",ent:"Частые болезни горла и ушей",gi:"Проблемы с желудком / ЖКТ",heart:"Проблемы с сердцем",posture:"Сколиоз, плоскостопие, суставы",skin:"Проблемы с кожей, аллергия",neuro:"Частые головные боли",endo:"Гормональные проблемы",asthma:"Астма, частый кашель"};
+const CONDS={neuro:"Частые головные боли",sleepd:"Плохо сплю",anx:"Тревожность, частый стресс",
+  ent:"Частые болезни горла и ушей",asthma:"Астма, частый кашель",
+  heart:"Проблемы с сердцем",hyper:"Повышенное давление",
+  gi:"Проблемы с желудком / ЖКТ",
+  posture:"Сколиоз, плоскостопие, суставы",
+  vision:"Плохое зрение",
+  skin:"Проблемы с кожей",allergy:"Аллергия",
+  endo:"Гормональные проблемы",diab:"Диабет или высокий сахар"};
+// Группы для профиля
+const COND_GROUPS=[["Нервная система",["neuro","sleepd","anx"]],["Дыхание и ЛОР",["ent","asthma"]],["Сердце и сосуды",["heart","hyper"]],
+  ["Пищеварение",["gi"]],["Кости и суставы",["posture"]],["Глаза",["vision"]],["Кожа и аллергия",["skin","allergy"]],["Гормоны и обмен веществ",["endo","diab"]]];
 const STATUS={ok:"Всё хорошо",complaint:"Есть жалобы",chronic:"Хроническое"};
 
 const KEY="health-map-v1";
 const today=new Date();today.setHours(0,0,0,0);
-const iso=d=>d.toISOString().slice(0,10);
+const iso=d=>d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
 const shift=(m,d=0)=>{const x=new Date(today);x.setMonth(x.getMonth()+m);x.setDate(x.getDate()+d);return iso(x)};
 const uid=()=>Math.random().toString(36).slice(2,9);
 
 function demo(){
   return {demo:true,current:"u1",users:[
-    {id:"u1",name:"Саша (пример)",birth:"2013-03-14",conds:["gi"],visits:{dent:shift(-7),ped:shift(-5),gastro:shift(-5,-10)},
-     organs:{stomach:{s:"complaint",note:"После фастфуда болит живот",d:shift(-1)},teeth:{s:"ok",note:"Поставили пломбу",d:shift(-7)}}},
-    {id:"u2",name:"Мама (пример)",birth:"1985-09-02",conds:["vision"],visits:{dent:shift(-2),oph:shift(-13)},
-     organs:{eyes:{s:"chronic",note:"Близорукость −2,5",d:shift(-13)},knees:{s:"complaint",note:"Ноет колено после бега",d:shift(0,-12)}}}
+    {id:"u1",name:"Саша (пример)",birth:"2013-03-14",sex:"m",conds:["gi"],visits:{dent:shift(-7),ped:shift(-5),gastro:shift(-5,-10)},
+     organs:{stomach:{s:"complaint",note:"После фастфуда болит живот",d:shift(-1)},teeth:{s:"ok",note:"Поставили пломбу",d:shift(-7)}},
+     metrics:{weight:[{d:shift(-6),v:44.2},{d:shift(-4),v:45.1},{d:shift(-2),v:46},{d:shift(0,-3),v:46.8}],
+       sleep:[{d:shift(0,-6),v:8.5},{d:shift(0,-5),v:7},{d:shift(0,-4),v:7.5},{d:shift(0,-3),v:6.5},{d:shift(0,-2),v:9},{d:shift(0,-1),v:7}]}},
+    {id:"u2",name:"Мама (пример)",birth:"1985-09-02",sex:"f",conds:["vision"],visits:{dent:shift(-2),oph:shift(-13)},
+     organs:{eyes:{s:"chronic",note:"Близорукость −2,5",d:shift(-13)},knees:{s:"complaint",note:"Ноет колено после бега",d:shift(0,-12)}},
+     metrics:{weight:[{d:shift(-5),v:68.4},{d:shift(-3),v:67.1},{d:shift(-1),v:66.5}],bp:[{d:shift(-3),s:128,di:84},{d:shift(-1),s:135,di:88},{d:shift(0,-5),s:142,di:91}],sugar:[{d:shift(-2),v:5.1}],chol:[{d:shift(-2),v:5.6}]}}
   ]};
 }
 let S;
 try{S=JSON.parse(localStorage.getItem(KEY))}catch(e){}
 if(!S||!S.users||!S.users.length)S=demo();
-function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){};queueSync()}
 const U=()=>S.users.find(u=>u.id===S.current)||S.users[0];
 const $=s=>document.querySelector(s);
 const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const fmt=s=>new Date(s+"T00:00").toLocaleDateString("ru-RU",{day:"numeric",month:"long",year:"numeric"});
-function toast(t){const el=$("#toast");el.textContent=t;el.classList.add("show");clearTimeout(toast.t);toast.t=setTimeout(()=>el.classList.remove("show"),1800)}
+function toast(t,undo){const el=$("#toast");el.textContent=t;
+  if(undo){const b=document.createElement("button");b.className="toast-btn";b.textContent="Вернуть";
+    b.onclick=()=>{clearTimeout(toast.t);el.classList.remove("show");undo()};el.append(b)}
+  el.classList.toggle("act",!!undo);el.classList.add("show");clearTimeout(toast.t);toast.t=setTimeout(()=>el.classList.remove("show"),undo?5000:1800)}
 
 /* ---------- напоминания ---------- */
 function activeDoctors(u){
   const out=[];
   for(const d of DOCTORS){
     const why=[];
-    if(d.always)why.push("всем раз в "+(d.months===6?"полгода":"год"));
-    if(d.cond&&u.conds.includes(d.cond))why.push("в профиле: «"+CONDS[d.cond]+"»");
+    const b=d.base&&d.base(u);if(b)why.push(b);
+    [].concat(d.cond||[]).filter(c=>u.conds.includes(c)).forEach(c=>why.push("в профиле: «"+CONDS[c]+"»"));
     for(const o of d.organs||[]){const r=u.organs[o];if(r&&r.s!=="ok")why.push(ORGAN_NAME[o]+" — "+STATUS[r.s].toLowerCase())}
     if(why.length)out.push({d,why});
   }
   return out;
 }
+const monthsOf=(d,u)=>typeof d.months==="function"?d.months(u):d.months;
 function state(u,d){
   const last=u.visits[d.id];
-  if(!last)return {cls:"info",label:"Нет даты визита",rank:1};
-  const next=new Date(last+"T00:00");next.setMonth(next.getMonth()+d.months);
+  if(!last)return {cls:"info",label:d.habit?"Нет даты":"Нет даты визита",rank:1};
+  const next=new Date(last+"T00:00");next.setMonth(next.getMonth()+monthsOf(d,u));
   const days=Math.round((next-today)/864e5);
-  if(days<0)return {cls:"bad",label:"Пора записаться",next,days,rank:0};
+  if(days<0)return {cls:"bad",label:d.habit?"Пора поменять":"Пора записаться",next,days,rank:0};
   if(days<=30)return {cls:"warn",label:"Через "+days+" дн.",next,days,rank:2};
   return {cls:"ok",label:"В порядке",next,days,rank:3};
 }
 function renderRem(){
   const u=U();
   const items=activeDoctors(u).map(x=>({...x,st:state(u,x.d)})).sort((a,b)=>a.st.rank-b.st.rank||(a.st.days??0)-(b.st.days??0));
+  const over=items.filter(x=>x.st.cls==="bad").length;const rb=$("#remBadge");if(rb){rb.hidden=!over;rb.textContent=over}
   $("#remList").innerHTML=items.map(({d,why,st})=>`
     <div class="rem ${st.cls}">
       <div class="doc">${d.name}</div>
       <span class="pill ${st.cls}">${st.label}</span>
       <div class="why">Почему: ${esc(why.join("; "))}</div>
       <div class="ctl">
-        <label for="v-${d.id}">Последний визит</label>
+        <label for="v-${d.id}">${d.habit?"Последний раз":"Последний визит"}</label>
         <input type="date" id="v-${d.id}" data-doc="${d.id}" value="${u.visits[d.id]||""}" max="${iso(today)}">
-        <button data-today="${d.id}">Был сегодня</button>
+        <button data-today="${d.id}">${d.habit?"Сделано сегодня":"Был сегодня"}</button>
         ${st.next?`<span class="note nums">Следующий: ${fmt(iso(st.next))}</span>`:""}
       </div>
     </div>`).join("");
@@ -268,9 +447,11 @@ function renderMap(){
   const Z=ZONES[selZone];
   if(!selOrgan||!Z.organs[selOrgan])selOrgan=Object.keys(Z.organs)[0];
   const r=u.organs[selOrgan]||{s:"",note:""};
+  renderSys();
   $("#panel").innerHTML=`
-    <h2>${Z.name}</h2>
-    <div class="organs">${Object.entries(Z.organs).map(([k,n])=>`<button data-organ="${k}" aria-pressed="${k===selOrgan}"><span class="dot ${u.organs[k]?.s||""}"></span>${n}</button>`).join("")}</div>
+    <h2>${selZone==="systems"?Z.organs[selOrgan]:Z.name}</h2>
+    ${selZone==="systems"?`<p class="note" style="margin:0">${SYS_DESC[selOrgan]}</p>`:""}
+    ${selZone==="systems"?"":`<div class="organs">${Object.entries(Z.organs).map(([k,n])=>`<button data-organ="${k}" aria-pressed="${k===selOrgan}"><span class="dot ${u.organs[k]?.s||""}"></span>${n}</button>`).join("")}</div>`}
     <div class="field"><span>Состояние: ${Z.organs[selOrgan]}</span>
       <div class="seg">${Object.entries(STATUS).map(([k,n])=>`<label><input type="radio" name="st" id="st-${k}" value="${k}" ${r.s===k?"checked":""}>${n}</label>`).join("")}</div>
     </div>
@@ -282,6 +463,12 @@ function renderMap(){
     </div>
     <p class="note">Если отметить «есть жалобы» или «хроническое», во вкладке «Напоминания» появится нужный врач.</p>`;
 }
+function renderSys(){
+  const u=U();
+  $("#sysGrid").innerHTML=Object.entries(ZONES.systems.organs).map(([k,n])=>`<button class="sys" data-sys="${k}" aria-pressed="${selZone==="systems"&&selOrgan===k}"><span class="dot ${u.organs[k]?.s||""}"></span><b>${n}</b><small>${SYS_DESC[k]}</small></button>`).join("");
+}
+document.addEventListener("click",e=>{const b=e.target.closest(".sys");if(!b)return;selZone="systems";selOrgan=b.dataset.sys;renderMap();
+  if(window.matchMedia("(max-width:680px)").matches)$("#panel").scrollIntoView({behavior:"smooth",block:"start"})});
 function pickZone(z){selZone=z;selOrgan=null;renderMap()}
 document.querySelectorAll(".zone").forEach(z=>{
   z.addEventListener("click",()=>pickZone(z.dataset.zone));
@@ -293,13 +480,14 @@ $("#panel").addEventListener("click",e=>{
   if(b.id==="saveOrgan"){
     const s=document.querySelector('input[name=st]:checked')?.value;
     if(!s){toast("Выберите состояние");return}
-    u.organs[selOrgan]={s,note:$("#orgNote").value.trim(),d:iso(today)};save();renderMap();renderRem();toast("Сохранено")
+    u.organs[selOrgan]={s,note:$("#orgNote").value.trim(),d:iso(today)};save();renderMap();renderRem();renderChk();toast("Сохранено")
   }
-  if(b.id==="clearOrgan"){delete u.organs[selOrgan];save();renderMap();renderRem();toast("Запись удалена")}
+  if(b.id==="clearOrgan"){delete u.organs[selOrgan];save();renderMap();renderRem();renderChk();toast("Запись удалена")}
 });
 
 /* ---------- профиль ---------- */
 let confirmDel=false;
+function yrs(n){const a=n%10,b=n%100;return n+" "+(a===1&&b!==11?"год":a>=2&&a<=4&&(b<12||b>14)?"года":"лет")}
 function age(b){if(!b)return"";const d=new Date(b+"T00:00");let a=today.getFullYear()-d.getFullYear();if(today<new Date(today.getFullYear(),d.getMonth(),d.getDate()))a--;return a}
 function renderProf(){
   const u=U();
@@ -307,10 +495,11 @@ function renderProf(){
     <div class="row">
       <label class="field" for="pName"><span>Имя</span><input type="text" id="pName" value="${esc(u.name)}"></label>
       <label class="field" for="pBirth"><span>Дата рождения</span><input type="date" id="pBirth" value="${u.birth||""}" max="${iso(today)}"></label>
-      ${u.birth?`<span class="note nums">${age(u.birth)} лет</span>`:""}
+      ${u.birth?`<span class="note nums">${yrs(age(u.birth))}</span>`:""}
+      <label class="field" for="pSex"><span>Пол</span><select id="pSex"><option value="" ${!u.sex?"selected":""}>Не указан</option><option value="f" ${u.sex==="f"?"selected":""}>Женский</option><option value="m" ${u.sex==="m"?"selected":""}>Мужской</option></select></label>
     </div>
     <div class="field"><span>Есть ли такие проблемы со здоровьем?</span>
-      <div class="checks">${Object.entries(CONDS).map(([k,n])=>`<label><input type="checkbox" id="c-${k}" data-cond="${k}" ${u.conds.includes(k)?"checked":""}>${n}</label>`).join("")}</div>
+      <div class="cgroups">${COND_GROUPS.map(([g,ks])=>`<fieldset class="cgroup"><legend>${g}</legend>${ks.map(k=>`<label><input type="checkbox" id="c-${k}" data-cond="${k}" ${u.conds.includes(k)?"checked":""}>${CONDS[k]}</label>`).join("")}</fieldset>`).join("")}</div>
     </div>
     <div class="confirm">${S.users.length>1?(confirmDel
       ?`<span>Удалить «${esc(u.name)}» со всеми записями?</span><button id="delYes" class="primary">Да, удалить</button><button id="delNo">Отмена</button>`
@@ -319,7 +508,8 @@ function renderProf(){
 $("#profCard").addEventListener("change",e=>{
   const u=U();
   if(e.target.id==="pName"){u.name=e.target.value.trim()||"Без имени";renderUsers()}
-  if(e.target.id==="pBirth"){u.birth=e.target.value;renderProf()}
+  if(e.target.id==="pBirth"){u.birth=e.target.value;syncSeen(u,true);renderProf();renderChk();renderRem();renderMet();renderNews()}
+  if(e.target.id==="pSex"){u.sex=e.target.value;syncSeen(u,true);renderRem();renderNews()}
   if(e.target.dataset.cond){const k=e.target.dataset.cond;u.conds=e.target.checked?[...u.conds,k]:u.conds.filter(c=>c!==k);renderRem()}
   save();toast("Профиль сохранён");
 });
@@ -329,15 +519,398 @@ $("#profCard").addEventListener("click",e=>{
   if(e.target.id==="delYes"){S.users=S.users.filter(x=>x.id!==S.current);S.current=S.users[0].id;confirmDel=false;save();renderAll();toast("Пользователь удалён")}
 });
 
+
+/* ---------- стоит проверить ---------- */
+// min/max — возраст в годах; months — через сколько снова напомнить после «Проверено»
+const CHECKS=[
+ {id:"eyes",t:"Зрение",min:6,max:30,months:12,tag:"Школьники",
+  why:"Близорукость у школьников развивается постепенно. Ребёнок часто не замечает, что видит хуже, и просто привыкает щуриться.",
+  how:"<b>Признаки:</b> щурится, садится ближе к доске или экрану, трёт глаза. <b>Что делать:</b> раз в год показаться офтальмологу."},
+ {id:"spine",t:"Осанка и сколиоз",min:8,max:18,months:12,tag:"Период роста",
+  why:"Искривление позвоночника чаще всего появляется в период быстрого роста. Сначала оно не болит, поэтому его легко пропустить.",
+  how:"<b>Домашний тест:</b> наклониться вперёд с опущенными руками, а взрослый смотрит на спину сзади. Если одна сторона спины выше другой, нужно сходить к ортопеду."},
+ {id:"feet",t:"Плоскостопие",min:0,max:120,months:12,tag:"По вашим жалобам",
+  when:u=>["knees","feet","leg_mus"].some(o=>["complaint","chronic"].includes(u.organs[o]?.s)),
+  why:"На карте тела отмечено, что беспокоят ноги. Одна из частых причин боли и усталости в ногах — плоскостопие.",
+  how:"<b>Домашний тест:</b> встать мокрой ногой на бумагу или картон. Если след почти без выемки посередине, стоит показаться ортопеду."},
+ {id:"hearing",t:"Слух и наушники",min:10,max:35,months:12,tag:"Неочевидное",
+  why:"Громкая музыка в наушниках постепенно портит слух. Сначала это незаметно, а вернуть слух потом нельзя.",
+  how:"<b>Правило 60/60:</b> громкость не больше 60%, слушать не дольше 60 минут подряд. Если звенит в ушах или приходится переспрашивать, стоит сходить к ЛОРу."},
+ {id:"sleep",t:"Недосып",min:10,max:18,months:6,tag:"Неочевидное",
+  why:"Подросткам нужно 8–10 часов сна, но многие спят меньше из-за телефона и уроков. От недосыпа хуже память, настроение и иммунитет.",
+  how:"<b>Проверьте:</b> посчитайте, сколько часов сна было за неделю. Помогает убрать экран за час до сна."},
+ {id:"iron",t:"Железо и анемия",min:12,max:120,months:12,
+  why:"Нехватка железа — одна из самых частых проблем, особенно у девочек-подростков и женщин. Её путают с обычной усталостью.",
+  how:"<b>Признаки:</b> бледность, слабость, ломкие ногти, одышка на лестнице. <b>Что делать:</b> общий анализ крови по направлению врача."},
+ {id:"moles",t:"Родинки",min:0,max:120,months:12,
+  why:"Большинство родинок безопасны, но изменения в них важно заметить вовремя. Особенно если много загорать.",
+  how:"<b>Правило ABCDE:</b> насторожиться, если родинка несимметричная, с неровным краем, разного цвета, крупнее 6 мм или меняется. Тогда к дерматологу."},
+ {id:"pressure",t:"Давление",min:18,max:120,months:12,tag:"Неочевидное",
+  why:"Повышенное давление часто никак не ощущается, его называют «тихим убийцей». Многие узнают о нём случайно.",
+  how:"<b>Что делать:</b> измерить давление дома тонометром или в аптеке. Если цифры часто выше 140/90, нужно к терапевту."},
+ {id:"thyroid",t:"Щитовидная железа",min:18,max:120,months:24,
+  why:"Во многих регионах России мало йода. Проблемы с щитовидкой маскируются под усталость, лишний вес или нервозность.",
+  how:"<b>Что делать:</b> спросить у терапевта про анализ на ТТГ. Использовать йодированную соль."},
+ {id:"sugar",t:"Сахар в крови",min:40,max:120,months:12,
+  why:"Диабет 2 типа долго развивается незаметно. Чаще встречается после 40 лет и при лишнем весе.",
+  how:"<b>Признаки:</b> жажда, частые походы в туалет, усталость. <b>Что делать:</b> анализ крови на глюкозу у терапевта."},
+ {id:"chol",t:"Холестерин",min:40,max:120,months:24,
+  why:"Высокий холестерин не болит, но с годами повышает риск проблем с сердцем.",
+  how:"<b>Что делать:</b> анализ крови на холестерин, его можно сдать вместе с другими анализами у терапевта."},
+];
+function relevantChecks(u){const a=u.birth?age(u.birth):null;return CHECKS.filter(c=>(a===null||(a>=c.min&&a<=c.max))&&(!c.when||c.when(u)))}
+function chkState(u,c){const r=(u.checks||{})[c.id];if(!r)return"todo";if(r.skip)return"skip";
+  const next=new Date(r.d+"T00:00");next.setMonth(next.getMonth()+c.months);return next>today?"done":"todo"}
+function chkCard(u,c,st){const r=(u.checks||{})[c.id];
+  return `<div class="chk ${st}"><div class="chk-top"><b>${c.t}</b>${c.tag?`<span class="tag">${c.tag}</span>`:""}</div>
+    <p>${c.why}</p><div class="how">${c.how}</div>
+    <div class="ctl">${st==="todo"?`<button class="primary" data-chk="${c.id}" data-act="done">Проверено</button><button data-chk="${c.id}" data-act="skip">Не актуально</button>`
+      :`<span class="note">${st==="skip"?"Отмечено как неактуальное":"Проверено "+fmt(r.d)}</span><button data-chk="${c.id}" data-act="undo">Вернуть</button>`}</div></div>`}
+function renderChk(){
+  const u=U();u.checks=u.checks||{};const list=relevantChecks(u);
+  const todo=list.filter(c=>chkState(u,c)==="todo"),rest=list.filter(c=>chkState(u,c)!=="todo");
+  $("#chkHint").textContent=u.birth?`Частые и незаметные проблемы, подобранные по возрасту: ${yrs(age(u.birth))}. Отметьте, что уже проверили.`
+    :"Частые и незаметные проблемы со здоровьем. Укажите дату рождения в профиле, и список подстроится под возраст.";
+  const a=u.birth?age(u.birth):null;
+  const groups=[
+    ["По возрасту"+(a!==null?": "+yrs(a):""),"Важно именно в этом возрасте",todo.filter(c=>!c.when&&(c.min>0||c.max<120))],
+    ["Для всех","Подходит в любом возрасте",todo.filter(c=>!c.when&&c.min===0&&c.max===120)],
+    ["По вашим жалобам","Появилось из-за отметок на карте тела",todo.filter(c=>c.when)]].filter(g=>g[2].length);
+  $("#chkList").innerHTML=todo.length?groups.map(([t,s,l])=>`<div class="chk-group"><div class="chk-gh"><h3>${t}</h3><span class="note">${s}</span></div>${l.map(c=>chkCard(u,c,"todo")).join("")}</div>`).join(""):`<div class="chk"><b>Всё проверено</b><p>Отличная работа. Когда подойдёт время, пункты вернутся сюда сами.</p></div>`;
+  $("#chkDoneWrap").hidden=!rest.length;$("#chkDoneSum").textContent=`Уже проверено или не актуально: ${rest.length}`;
+  $("#chkDone").innerHTML=rest.map(c=>chkCard(u,c,chkState(u,c))).join("");
+  const b=$("#chkBadge");b.hidden=!todo.length;b.textContent=todo.length;
+}
+$("#p-chk").addEventListener("click",e=>{const b=e.target.closest("[data-chk]");if(!b)return;const u=U();u.checks=u.checks||{};const id=b.dataset.chk;
+  if(b.dataset.act==="done"){u.checks[id]={d:iso(today)};toast("Отмечено: проверено")}
+  if(b.dataset.act==="skip"){const prev=u.checks[id];u.checks[id]={skip:true};
+    toast("Скрыто",()=>{if(prev)u.checks[id]=prev;else delete u.checks[id];save();renderChk();toast("Вернули в список")})}
+  if(b.dataset.act==="undo"){delete u.checks[id];toast("Вернули в список")}
+  save();renderChk()});
+
+/* ---------- показатели ---------- */
+const METRICS=[
+ {id:"weight",t:"Вес",unit:"кг",step:"0.1",min:2,max:300,
+  ref:()=>"Следите за резкими изменениями: больше 5% за месяц без причины стоит обсудить с врачом."},
+ {id:"sleep",t:"Сон",unit:"ч в сутки",step:"0.5",min:0.5,max:24,
+  ref:u=>{const n=sleepNorm(u);return `Для возраста ${n.who} обычно ${nf(n.lo)}–${nf(n.hi)} часов.`},
+  rate:(v,u)=>{const n=sleepNorm(u);return v<n.lo?["warn","Меньше нормы"]:v>n.hi?["info","Больше обычного"]:["ok","В пределах нормы"]}},
+ {id:"sugar",t:"Сахар в крови",unit:"ммоль/л",step:"0.1",min:1,max:35,
+  ref:()=>"Натощак обычно 3,3–5,5 ммоль/л (из пальца).",
+  rate:v=>v<3.3?["warn","Ниже обычного"]:v<=5.5?["ok","В пределах обычного"]:v<7?["warn","Выше обычного"]:["bad","Заметно выше"]},
+ {id:"chol",t:"Холестерин",unit:"ммоль/л",step:"0.1",min:1,max:20,
+  ref:()=>"Общий холестерин обычно ниже 5,2 ммоль/л.",
+  rate:v=>v<5.2?["ok","В пределах обычного"]:v<6.2?["warn","Выше обычного"]:["bad","Заметно выше"]},
+ {id:"bp",t:"Давление",unit:"мм рт. ст.",bp:true,
+  ref:u=>(ageOf(u)??18)<18?"У детей нормы зависят от возраста и роста, их подскажет педиатр.":"Обычно ниже 140/90, лучше около 120/80.",
+  rate:(v,u)=>(ageOf(u)??18)<18?null:(v.s>=160||v.di>=100)?["bad","Заметно выше"]:(v.s>=140||v.di>=90)?["warn","Выше обычного"]:(v.s<90||v.di<60)?["warn","Ниже обычного"]:["ok","В пределах обычного"]}
+];
+// Нормы сна по возрасту (рекомендации сомнологов)
+function sleepNorm(u){const a=ageOf(u)??30;return a<6?{lo:10,hi:13,who:"3–5 лет"}:a<13?{lo:9,hi:12,who:"6–12 лет"}:a<18?{lo:8,hi:10,who:"13–17 лет"}:{lo:7,hi:9,who:"взрослых"}}
+const nf=v=>String(v).replace(".",",");
+const mval=(m,e)=>m.bp?`${e.s}/${e.di}`:nf(e.v);
+// Ориентиры для графика: band — зона нормы, lines — пороги
+const REFS={sleep:u=>{const n=sleepNorm(u);return {band:[n.lo,n.hi]}},sugar:{band:[3.3,5.5]},chol:{lines:[[5.2,"5,2"]]},bp:{lines:[[140,"140"],[90,"90"]]}};
+const PERIODS=[[1,"Месяц"],[3,"3 мес."],[6,"Полгода"],[12,"Год"],[0,"Всё"]];
+const metPeriod={};
+const dshort=t=>new Date(t).toLocaleDateString("ru-RU",{day:"numeric",month:"short"}).replace(".","");
+const dmonth=t=>new Date(t).toLocaleDateString("ru-RU",{month:"short",year:"2-digit"}).replace(".","").replace(" г","");
+function chart(m,all,per,u){
+  const DAY=864e5,end=today.getTime();
+  let start;if(per){const x=new Date(today);x.setMonth(x.getMonth()-per);start=x.getTime()}
+  else{start=all.length?Math.min(new Date(all[0].d+"T00:00").getTime(),end-30*DAY):end-30*DAY}
+  const list=all.filter(e=>new Date(e.d+"T00:00").getTime()>=start);
+  if(!list.length)return `<p class="empty-met">Нет замеров за этот период.</p>`;
+  const W=320,H=150,L=36,Rr=10,T=10,B=24,iw=W-L-Rr,ih=H-T-B;
+  const vals=m.bp?list.flatMap(e=>[e.s,e.di]):list.map(e=>e.v);
+  const ref=(u&&m.bp&&(ageOf(u)??18)<18)?{}:(typeof REFS[m.id]==="function"?REFS[m.id](u):(REFS[m.id]||{}));
+  let lo=Math.min(...vals),hi=Math.max(...vals);
+  if(ref.band){lo=Math.min(lo,ref.band[0]);hi=Math.max(hi,ref.band[1])}
+  (ref.lines||[]).forEach(([v])=>{if(v>lo-(hi-lo)*.6&&v<hi+(hi-lo)*.6||lo===hi){lo=Math.min(lo,v);hi=Math.max(hi,v)}});
+  const pad=(hi-lo)*.12||1;lo-=pad;hi+=pad;
+  const X=t=>L+(t-start)/(end-start||1)*iw,Y=v=>T+ih-(v-lo)/(hi-lo)*ih;
+  const tx=e=>X(new Date(e.d+"T00:00").getTime()).toFixed(1);
+  const fmtN=v=>m.bp?Math.round(v):nf(Math.round(v*10)/10);
+  // сетка по Y: 3 линии
+  let g="";for(let i=0;i<3;i++){const v=lo+pad+(hi-lo-2*pad)*i/2;const y=Y(v).toFixed(1);g+=`<line class="gl" x1="${L}" x2="${W-Rr}" y1="${y}" y2="${y}"/><text class="ty" x="${L-6}" y="${y}">${fmtN(v)}</text>`}
+  // ось X: 4 подписи
+  const long=(end-start)>200*DAY;let xa="";for(let i=0;i<4;i++){const t=start+(end-start)*i/3;xa+=`<text class="tx" x="${X(t).toFixed(1)}" y="${H-6}" text-anchor="${i===0?"start":i===3?"end":"middle"}">${long?dmonth(t):dshort(t)}</text>`}
+  let rf="";if(ref.band){const y1=Y(ref.band[1]),y0=Y(ref.band[0]);rf+=`<rect class="band" x="${L}" y="${y1.toFixed(1)}" width="${iw}" height="${(y0-y1).toFixed(1)}"/><text class="tb" x="${W-Rr-4}" y="${(y1+11).toFixed(1)}" text-anchor="end">норма</text>`}
+  (ref.lines||[]).forEach(([v,lab])=>{const y=Y(v);if(y>T&&y<T+ih)rf+=`<line class="thr" x1="${L}" x2="${W-Rr}" y1="${y.toFixed(1)}" y2="${y.toFixed(1)}"/><text class="tb" x="${(L+iw/2).toFixed(1)}" y="${(y-4).toFixed(1)}" text-anchor="middle">граница ${lab}</text>`});
+  const line=(k,c)=>{const pts=list.map(e=>`${tx(e)},${Y(m.bp?e[k]:e.v).toFixed(1)}`).join(" ");
+    const dots=list.map(e=>`<circle class="${c}" cx="${tx(e)}" cy="${Y(m.bp?e[k]:e.v).toFixed(1)}" r="3.5"><title>${fmt(e.d)}: ${mval(m,e)}</title></circle>`).join("");
+    return (list.length>1?`<polyline class="l-${c}" points="${pts}"/>`:"")+dots};
+  const leg=m.bp?`<div class="leg"><span><i class="k1"></i>верхнее</span><span><i class="k2"></i>нижнее</span></div>`:"";
+  return `<svg class="chart" viewBox="0 0 ${W} ${H}" role="img" aria-label="График: ${m.t}">${rf}${g}<line class="ax" x1="${L}" x2="${W-Rr}" y1="${T+ih}" y2="${T+ih}"/>${xa}${m.bp?line("s","p1")+line("di","p2"):line("v","p1")}</svg>${leg}`;
+}
+
+// Изменение за подходящий срок: от самого раннего замера за последние 2 года до последнего
+const pl=(n,f)=>{const a=n%10,b=n%100;return f[a===1&&b!==11?0:a>=2&&a<=4&&(b<12||b>14)?1:2]};
+function span(days){
+  // «за последний месяц», «за последние 4 месяца», «за последнюю неделю»
+  const L=(n,f,one)=>{const a=n%10,b=n%100,single=a===1&&b!==11;return n===1?`за ${one}`:`за ${single?(f[3]||"последний"):"последние"} ${nf(n)} ${pl(Math.floor(n),f)}`};
+  if(days<14)return L(days,["день","дня","дней"],"последний день");
+  if(days<60){const w=Math.round(days/7);return L(w,["неделю","недели","недель","последнюю"],"последнюю неделю")}
+  if(days<345){const mo=Math.round(days/30.4);return L(mo,["месяц","месяца","месяцев"],"последний месяц")}
+  const y=Math.round(days/365*2)/2;return y===1?"за последний год":y%1?`за последние ${nf(y)} года`:L(y,["год","года","лет"],"последний год");
+}
+function trend(m,list){
+  if(list.length<2)return "";
+  if(m.id==="sleep"){const lt=new Date(list[list.length-1].d+"T00:00"),wk=list.filter(e=>(lt-new Date(e.d+"T00:00"))/864e5<7);
+    const avg=Math.round(wk.reduce((s,e)=>s+e.v,0)/wk.length*10)/10;return `в среднем ${nf(avg)} ч ${wk.length>1?span(Math.round((lt-new Date(wk[0].d+"T00:00"))/864e5)+1):""}`.trim()}
+  const last=list[list.length-1],lt=new Date(last.d+"T00:00");const from=new Date(lt);from.setFullYear(from.getFullYear()-2);
+  const first=list.find(e=>new Date(e.d+"T00:00")>=from);if(!first||first===last)return "";
+  const days=Math.round((lt-new Date(first.d+"T00:00"))/864e5);if(days<1)return "";
+  const sg=d=>d===0?"±0":(d>0?"+":"−")+nf(Math.abs(d));
+  const txt=m.bp?`${sg(last.s-first.s)}/${sg(last.di-first.di)}`:(()=>{const d=Math.round((last.v-first.v)*10)/10;return d===0?"без изменений":sg(d)+" "+m.unit})();
+  return `${txt} ${span(days)}`;
+}
+function renderMet(){
+  const u=U();u.metrics=u.metrics||{};
+  $("#metGrid").innerHTML=METRICS.map(m=>{
+    const list=(u.metrics[m.id]||[]).slice().sort((a,b)=>a.d<b.d?-1:1);
+    const last=list[list.length-1],prev=list[list.length-2];
+    const r=last&&m.rate?m.rate(m.bp?last:last.v,u):null;
+    const delta=trend(m,list);
+    const inputs=m.bp?`<label for="m-${m.id}-s">Верхнее<input type="number" id="m-${m.id}-s" inputmode="numeric" min="50" max="260" required></label><label for="m-${m.id}-di">Нижнее<input type="number" id="m-${m.id}-di" inputmode="numeric" min="30" max="160" required></label>`
+      :`<label for="m-${m.id}-v">${m.unit}<input type="number" id="m-${m.id}-v" inputmode="decimal" step="${m.step}" min="${m.min}" max="${m.max}" required></label>`;
+    return `<div class="met">
+      <div class="met-top"><b>${m.t}</b>${r?`<span class="pill ${r[0]}">${r[1]}</span>`:""}</div>
+      ${last?`<div class="met-val"><strong>${mval(m,last)}</strong><span class="unit">${m.unit} · ${fmt(last.d)}</span>${delta?`<span class="delta">${delta}</span>`:""}</div>`
+        :`<p class="empty-met">Пока нет замеров. Добавьте первый ниже.</p>`}
+      ${list.length?`<div class="per" role="group" aria-label="Период">${PERIODS.map(([p,n])=>`<button type="button" data-per="${m.id}" data-p="${p}" aria-pressed="${(metPeriod[m.id]??0)===p}">${n}</button>`).join("")}</div>${chart(m,list,metPeriod[m.id]??0,u)}`:""}
+      <p class="ref">${m.ref(u)}</p>
+      <form data-met="${m.id}">${inputs}<label for="m-${m.id}-d">Дата<input type="date" id="m-${m.id}-d" value="${iso(today)}" max="${iso(today)}" required></label><button class="primary" type="submit">Добавить</button></form>
+      ${list.length?`<details><summary>История (${list.length})</summary><ul class="hist">${list.slice().reverse().map(e=>`<li><span>${fmt(e.d)}</span><span><b>${mval(m,e)}</b> <button type="button" data-del="${m.id}" data-at="${list.indexOf(e)}">Удалить</button></span></li>`).join("")}</ul></details>`:""}
+    </div>`}).join("");
+}
+$("#metGrid").addEventListener("submit",e=>{e.preventDefault();const f=e.target,id=f.dataset.met,m=METRICS.find(x=>x.id===id),u=U();
+  u.metrics=u.metrics||{};const d=$(`#m-${id}-d`).value||iso(today);
+  let rec;if(m.bp){const s=+$(`#m-${id}-s`).value,di=+$(`#m-${id}-di`).value;if(!s||!di){toast("Введите оба числа");return}if(di>=s){toast("Нижнее число должно быть меньше верхнего");return}rec={d,s,di}}
+  else{const v=parseFloat(String($(`#m-${id}-v`).value).replace(",","."));if(!v){toast("Введите число");return}rec={d,v}}
+  (u.metrics[id]=u.metrics[id]||[]).push(rec);save();renderMet();toast("Замер сохранён")});
+$("#metGrid").addEventListener("click",e=>{const p=e.target.closest("[data-per]");if(p){metPeriod[p.dataset.per]=+p.dataset.p;renderMet();return}
+  const b=e.target.closest("[data-del]");if(!b)return;const u=U(),id=b.dataset.del;
+  const list=(u.metrics[id]||[]).slice().sort((a,b)=>a.d<b.d?-1:1);const rec=list[+b.dataset.at];
+  const i=u.metrics[id].indexOf(rec);u.metrics[id].splice(i,1);save();renderMet();
+  toast("Замер удалён",()=>{u.metrics[id].push(rec);save();renderMet();toast("Вернули")})});
+
+/* ---------- уведомления на телефоне (Web Push через свой сервер) ---------- */
+// Адрес сервера уведомлений (Cloudflare Worker). Пока пусто — уведомления выключены.
+const PUSH_SERVER="";
+// Публичный ключ VAPID (не секрет). Секретная половина хранится только на сервере.
+const VAPID_PUBLIC="BLT8NkVD6RXB92oTlEuccUuIDGqNHfc3XANkKrUN7L86S-Kgwcl5xaSu7Zeo-shFExzVvAEVPOEiDUQ6Apd58IQ";
+const pushSupported=()=>"serviceWorker" in navigator&&"PushManager" in window&&"Notification" in window;
+let pushId=null;try{pushId=localStorage.getItem("push-id")}catch(e){}
+const b64uBytes=s=>Uint8Array.from(atob(s.replace(/-/g,"+").replace(/_/g,"/")+"===".slice((s.length+3)%4)),c=>c.charCodeAt(0));
+async function pushApi(path,body){
+  const r=await fetch(PUSH_SERVER.replace(/\/$/,"")+path,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(body)});
+  if(!r.ok)throw new Error("сервер ответил "+r.status);return r.json().catch(()=>({}));
+}
+// Что отправляется на сервер: только даты и названия напоминаний, без заметок о здоровье
+function pushItems(){const out=[];
+  for(const u of S.users)for(const {d} of activeDoctors(u)){const st=state(u,d);if(!st.next)continue;const date=iso(st.next);
+    out.push({key:u.id+":"+d.id+":"+date,who:u.name,title:d.habit?d.name:d.name+" — пора записаться",date})}
+  return out}
+const tzNow=()=>-new Date().getTimezoneOffset();
+function queueSync(){if(!pushId||!PUSH_SERVER)return;clearTimeout(queueSync.t);
+  queueSync.t=setTimeout(()=>pushApi("/sync",{id:pushId,items:pushItems(),tz:tzNow()}).catch(()=>{}),1500)}
+function renderPush(){
+  const box=$("#pushBox");if(!box)return;
+  const ios=/iPhone|iPad|iPod/.test(navigator.userAgent),home=matchMedia("(display-mode: standalone)").matches||navigator.standalone===true;
+  let html;
+  if(!PUSH_SERVER)html=`<b>Уведомления на телефоне</b><p class="note">Скоро: сервер уведомлений ещё не подключён.</p>`;
+  else if(!pushSupported())html=`<b>Уведомления на телефоне</b><p class="note">${ios&&!home?"На iPhone уведомления работают, только если открыть приложение с экрана «Домой» (iOS 16.4 и новее).":"Здесь уведомления недоступны. Откройте приложение на телефоне с экрана «Домой»."}</p>`;
+  else if(Notification.permission==="denied")html=`<b>Уведомления запрещены</b><p class="note">Разрешите их в настройках телефона: Настройки → Уведомления → Плюшка.</p>`;
+  else if(pushId&&Notification.permission==="granted")html=`<b>Уведомления включены</b><p class="note">В день, когда пора к врачу, телефон напомнит около 9:00. Если не записаться, напомнит снова через неделю.</p><div class="row"><button id="pushTest">Прислать пробное</button><button id="pushOff">Выключить</button></div>`;
+  else html=`<b>Уведомления на телефоне</b><p class="note">Телефон сам напомнит, когда пора к врачу, даже если приложение закрыто.</p><div class="row"><button class="primary" id="pushOn">Включить уведомления</button></div>`;
+  box.innerHTML=html;
+}
+$("#pushBox").addEventListener("click",async e=>{const id=e.target.id;if(!["pushOn","pushTest","pushOff"].includes(id))return;e.target.disabled=true;
+  try{
+    if(id==="pushOn"){
+      const perm=await Notification.requestPermission();
+      if(perm!=="granted"){toast("Уведомления не разрешены");return}
+      const reg=await navigator.serviceWorker.ready;
+      const sub=(await reg.pushManager.getSubscription())||await reg.pushManager.subscribe({userVisibleOnly:true,applicationServerKey:b64uBytes(VAPID_PUBLIC)});
+      const nid=pushId||(crypto.randomUUID?crypto.randomUUID():uid()+uid()+uid()+uid());
+      await pushApi("/subscribe",{id:nid,sub:sub.toJSON(),items:pushItems(),tz:tzNow()});
+      pushId=nid;try{localStorage.setItem("push-id",nid)}catch(_){}
+      toast("Уведомления включены");
+    }
+    if(id==="pushTest"){await pushApi("/test",{id:pushId});toast("Отправили. Уведомление придёт через пару секунд")}
+    if(id==="pushOff"){await pushApi("/unsubscribe",{id:pushId}).catch(()=>{});
+      try{const reg=await navigator.serviceWorker.ready;const s=await reg.pushManager.getSubscription();if(s)await s.unsubscribe()}catch(_){}
+      pushId=null;try{localStorage.removeItem("push-id")}catch(_){};toast("Уведомления выключены")}
+  }catch(err){toast("Не получилось: "+err.message)}
+  finally{renderPush()}
+});
+
+/* ---------- распознавание справок (Tesseract.js, всё на телефоне) ---------- */
+const OCR={script:"https://cdn.jsdelivr.net/npm/tesseract.js@5.1.1/dist/tesseract.min.js",
+  workerPath:"https://cdn.jsdelivr.net/npm/tesseract.js@5.1.1/dist/worker.min.js",
+  corePath:"https://cdn.jsdelivr.net/npm/tesseract.js-core@5.1.1",
+  langPath:"https://cdn.jsdelivr.net/npm/@tesseract.js-data/rus@1.0.0/4.0.0_best_int"};
+// Разбор распознанного текста справки: ищем показатели, дату и врача
+const DOC_WORDS=[["dent",/стоматолог/],["ped",/педиатр|терапевт/],["oph",/офтальмолог|окулист/],["ent",/оториноларинголог|(^|[^а-я])лор([^а-я]|$)/],
+ ["gastro",/гастроэнтеролог/],["cardio",/кардиолог/],["ortho",/ортопед|травматолог/],["derm",/дерматолог/],["neuro",/невролог|невропатолог/],
+ ["endo",/эндокринолог/],["neph",/нефролог/],["pulm",/пульмонолог/],["allergy",/аллерголог/],["psych",/психолог|психотерапевт/],
+ ["hemat",/гематолог/],["gyn",/гинеколог/],["uro",/уролог/]];
+function parseDoc(raw,todayIso){
+  const text=raw.replace(/\r/g,"").replace(/[ \t]+/g," ");
+  const lines=text.split("\n").map(s=>s.trim()).filter(Boolean);
+  const low=lines.map(s=>s.toLowerCase().replace(/ё/g,"е"));
+  const num=s=>parseFloat(String(s).replace(",","."));
+  const found=[];
+  const firstNum=(s,re)=>{const m=s.match(re);return m?m:null};
+  // числа вида 5,4 или 5.4 (одна-две цифры до запятой)
+  const NUM=/(\d{1,2}[.,]\d{1,2})/;
+  for(let i=0;i<low.length;i++){
+    const l=low[i],after=l+" "+(low[i+1]||"")+" "+(low[i+2]||"");
+    if(/глюкоз|сахар/.test(l)&&!found.some(f=>f.id==="sugar")){
+      const part=l.slice(l.search(/глюкоз|сахар/));const m=firstNum(part,NUM)||firstNum(after.slice(after.search(/глюкоз|сахар/)),NUM);
+      if(m){const v=num(m[1]);if(v>=1&&v<=35)found.push({id:"sugar",v})}
+    }
+    if(/холестерин/.test(l)&&!/лпнп|лпвп|лпонп|липопротеин|ldl|hdl/.test(l)&&!found.some(f=>f.id==="chol")){
+      const part=l.slice(l.search(/холестерин/));const m=firstNum(part,NUM)||firstNum(after.slice(after.search(/холестерин/)),NUM);
+      if(m){const v=num(m[1]);if(v>=1&&v<=20)found.push({id:"chol",v})}
+    }
+    if(/(^|[^а-я])ад([^а-я]|$)|давлени/.test(l)&&!found.some(f=>f.id==="bp")){
+      const m=after.match(/(\d{2,3})\s*[\/\\|]\s*(\d{2,3})/);
+      if(m){const s=+m[1],di=+m[2];if(s>=70&&s<=250&&di>=40&&di<=150&&s>di)found.push({id:"bp",s,di})}
+    }
+    if(/(^|[^а-я])вес([^а-я]|$)|масса тела/.test(l)&&!found.some(f=>f.id==="weight")){
+      const part=l.slice(l.search(/вес|масса тела/));const m=part.match(/(\d{1,3}(?:[.,]\d)?)\s*кг/)||part.match(/(\d{2,3}(?:[.,]\d)?)/);
+      if(m){const v=num(m[1]);if(v>=2&&v<=300)found.push({id:"weight",v})}
+    }
+  }
+  // дата: самая поздняя дата не из будущего, кроме даты рождения
+  let date=null;
+  low.forEach(l=>{if(/рожд/.test(l))return;for(const m of l.matchAll(/(\d{2})[.\/-](\d{2})[.\/-](\d{4}|\d{2})\b/g)){
+    const y=m[3].length===2?"20"+m[3]:m[3];const d=`${y}-${m[2]}-${m[1]}`;
+    if(+m[2]>=1&&+m[2]<=12&&+m[1]>=1&&+m[1]<=31&&d<=todayIso&&d>="1990-01-01"&&(!date||d>date))date=d}});
+  // врач: первое упоминание специальности
+  let doctor=null;for(const l of low){for(const [id,re] of DOC_WORDS)if(re.test(l)){doctor=id;break}if(doctor)break}
+  return {found,date,doctor};
+}
+function mergeDocs(a,b){const found=[...a.found];for(const f of b.found)if(!found.some(x=>x.id===f.id))found.push(f);
+  return {found,date:a.date||b.date,doctor:a.doctor||b.doctor}}
+// Подготовка фото к распознаванию: размер ~2000px, серый, растяжка контраста, порог Оцу
+async function prepImage(src){
+  const im=new Image();im.src=src;await im.decode();
+  const k=Math.min(2.5,2000/Math.max(im.width,im.height));
+  const c=document.createElement("canvas");c.width=Math.round(im.width*k);c.height=Math.round(im.height*k);
+  const x=c.getContext("2d",{willReadFrequently:true});x.imageSmoothingQuality="high";x.drawImage(im,0,0,c.width,c.height);
+  const d=x.getImageData(0,0,c.width,c.height),p=d.data,n=p.length/4,g=new Uint8ClampedArray(n),hist=new Array(256).fill(0);
+  for(let i=0;i<n;i++){const v=(p[i*4]*.299+p[i*4+1]*.587+p[i*4+2]*.114)|0;g[i]=v;hist[v]++}
+  // растяжка контраста по 1% и 99% перцентилям
+  let lo=0,hi=255,acc=0;for(;lo<255&&(acc+=hist[lo])<n*.01;lo++);acc=0;for(;hi>0&&(acc+=hist[hi])<n*.01;hi--);
+  const sc=255/Math.max(1,hi-lo),h2=new Array(256).fill(0);
+  for(let i=0;i<n;i++){const v=Math.max(0,Math.min(255,(g[i]-lo)*sc))|0;g[i]=v;h2[v]++}
+  // порог Оцу
+  let sum=0;for(let i=0;i<256;i++)sum+=i*h2[i];let sB=0,wB=0,best=0,thr=128;
+  for(let t=0;t<256;t++){wB+=h2[t];if(!wB)continue;const wF=n-wB;if(!wF)break;sB+=t*h2[t];const mB=sB/wB,mF=(sum-sB)/wF,b=wB*wF*(mB-mF)**2;if(b>best){best=b;thr=t}}
+  for(let i=0;i<n;i++){p[i*4]=p[i*4+1]=p[i*4+2]=g[i]}
+  x.putImageData(d,0,0);return c;
+}
+
+let ocrWorker=null,ocrStage="";
+function scanProgress(text,p){$("#scanOut").innerHTML=`<div class="scan-prog"><span>${text}</span><div class="scan-bar"><i style="width:${Math.round((p||0)*100)}%"></i></div></div>`}
+function loadScript(src){return new Promise((ok,bad)=>{const s=document.createElement("script");s.src=src;s.onload=ok;s.onerror=()=>bad(new Error("нет интернета для первой загрузки"));document.head.append(s)})}
+async function getOcr(){
+  if(ocrWorker)return ocrWorker;
+  if(!window.Tesseract){scanProgress("Загружаю распознавание…",.05);await loadScript(OCR.script)}
+  ocrWorker=await Tesseract.createWorker("rus",1,{workerPath:OCR.workerPath,corePath:OCR.corePath,langPath:OCR.langPath,
+    logger:m=>{if(m.status==="recognizing text")scanProgress(ocrStage,m.progress);else if(/load|init/.test(m.status))scanProgress("Загружаю словарь (только в первый раз)…",m.progress*.9)}});
+  return ocrWorker;
+}
+const readAsUrl=f=>new Promise((ok,bad)=>{const r=new FileReader();r.onload=()=>ok(r.result);r.onerror=bad;r.readAsDataURL(f)});
+let scanRes=null;
+$("#scanFile").addEventListener("change",async e=>{
+  const file=e.target.files[0];e.target.value="";if(!file)return;
+  try{
+    const src=await readAsUrl(file);scanProgress("Готовлю фото…",.02);
+    const canvas=await prepImage(src);const w=await getOcr();
+    let res=null,text="";
+    // два прохода: исходное фото целиком и улучшенное фото «по кусочкам»
+    for(const [psm,img,label] of [["3",src,"Читаю документ…"],["11",canvas,"Проверяю ещё раз…"]]){
+      ocrStage=label;await w.setParameters({tessedit_pageseg_mode:psm});
+      const {data}=await w.recognize(img);text+=(text?"\n\n":"")+data.text;const p=parseDoc(data.text,iso(today));res=res?mergeDocs(res,p):p}
+    scanRes={...res,text,thumb:src};renderScan();
+  }catch(err){$("#scanOut").innerHTML=`<p class="note">Не получилось распознать: ${esc(err.message)}. Попробуйте ещё раз.</p>`}
+});
+function renderScan(){
+  const r=scanRes;if(!r){$("#scanOut").innerHTML="";return}
+  const doc=r.doctor&&DOCTORS.find(d=>d.id===r.doctor);
+  const rows=r.found.map((f,i)=>{const m=METRICS.find(x=>x.id===f.id);
+    const val=m.bp?`<input type="number" id="sc-${i}-s" value="${f.s}"> / <input type="number" id="sc-${i}-di" value="${f.di}">`:`<input type="number" id="sc-${i}-v" step="0.1" value="${f.v}">`;
+    return `<label class="scan-row" for="sc-${i}-on"><input type="checkbox" id="sc-${i}-on" checked><b>${m.t}</b>${val}<span class="note">${m.unit}</span></label>`}).join("");
+  const nothing=!r.found.length&&!doc;
+  $("#scanOut").innerHTML=`<div class="scan-res"><img src="${r.thumb}" alt="Фото документа"><div class="scan-rows">
+    ${nothing?`<p class="note" style="margin:0">Не нашёл знакомых показателей. Сфотографируйте ровнее, при хорошем свете, чтобы текст был чётким.</p>`:`<p class="note" style="margin:0">Вот что удалось найти. Проверьте числа перед сохранением:</p>`}
+    ${rows}
+    ${doc?`<label class="scan-row" for="sc-doc"><input type="checkbox" id="sc-doc" checked><b>Визит к врачу</b><span>${doc.name}</span></label>`:""}
+    ${nothing?"":`<label class="scan-row" for="sc-date"><b>Дата документа</b><input type="date" id="sc-date" value="${r.date||iso(today)}" max="${iso(today)}">${r.date?"":`<span class="note">дату не нашёл, проверьте</span>`}</label>`}
+    <div class="row">${nothing?"":`<button class="primary" id="scSave">Сохранить для: ${esc(U().name)}</button>`}<button id="scCancel">${nothing?"Закрыть":"Отмена"}</button></div>
+    <details><summary>Распознанный текст</summary><pre>${esc(r.text.trim())}</pre></details></div></div>`;
+}
+$("#scanOut").addEventListener("click",e=>{
+  if(e.target.id==="scCancel"){scanRes=null;renderScan();return}
+  if(e.target.id!=="scSave")return;
+  const r=scanRes,u=U(),d=$("#sc-date").value||iso(today),saved=[];u.metrics=u.metrics||{};
+  r.found.forEach((f,i)=>{if(!$(`#sc-${i}-on`).checked)return;const m=METRICS.find(x=>x.id===f.id);
+    if(m.bp){const s=+$(`#sc-${i}-s`).value,di=+$(`#sc-${i}-di`).value;if(s>di&&di>0){(u.metrics.bp=u.metrics.bp||[]).push({d,s,di});saved.push(m.t)}}
+    else{const v=parseFloat(String($(`#sc-${i}-v`).value).replace(",","."));if(v>0){(u.metrics[m.id]=u.metrics[m.id]||[]).push({d,v});saved.push(m.t)}}});
+  if(r.doctor&&$("#sc-doc")?.checked){u.visits[r.doctor]=d;saved.push("визит: "+DOCTORS.find(x=>x.id===r.doctor).name)}
+  save();scanRes=null;renderScan();renderMet();renderRem();toast(saved.length?"Сохранено: "+saved.join(", "):"Ничего не выбрано");
+});
+/* ---------- новое по возрасту ---------- */
+// Какие пункты зависят от возраста/пола: вкладка «Проверить» (без пунктов по жалобам) и базовые врачи
+function ageItems(u){
+  const a=relevantChecks(u).filter(c=>!c.when).map(c=>["chk:"+c.id,c.t]);
+  const d=DOCTORS.filter(d=>d.base&&d.base(u)).map(d=>["doc:"+d.id+":"+monthsOf(d,u),d.name+(d.id==="oph"?" (новый интервал: "+d.base(u)+")":"")]);
+  return a.concat(d);
+}
+// silent=true — просто запомнить текущий набор (при первом запуске или правке профиля)
+function syncSeen(u,silent){const keys=ageItems(u).map(x=>x[0]);if(silent||!u.seen){u.seen=keys;save()}}
+function renderNews(){
+  const u=U(),box=$("#news");if(!u.seen)syncSeen(u,true);
+  const fresh=ageItems(u).filter(([k])=>!u.seen.includes(k));
+  if(!fresh.length){box.hidden=true;return}
+  const a=u.birth?age(u.birth):null;
+  box.innerHTML=`<b>${esc(u.name)}${a!==null?`, тебе уже ${a}!`:""}</b>
+    <p>С возрастом стоит обращать внимание на новые вещи. Появилось:</p>
+    <ul>${fresh.map(([,t])=>`<li>${esc(t)}</li>`).join("")}</ul>
+    <div class="row"><button class="primary" id="newsGo">Посмотреть</button><button id="newsOk">Понятно</button></div>`;
+  box.hidden=false;
+}
+$("#news").addEventListener("click",e=>{const u=U();
+  if(e.target.id==="newsGo"){syncSeen(u,true);renderNews();showTab("chk")}
+  if(e.target.id==="newsOk"){syncSeen(u,true);renderNews()}});
+
 /* ---------- пользователи и вкладки ---------- */
 function renderUsers(){$("#userSel").innerHTML=S.users.map(u=>`<option value="${u.id}" ${u.id===S.current?"selected":""}>${esc(u.name)}</option>`).join("");$("#demoBanner").hidden=!S.demo}
-function renderAll(){renderUsers();renderRem();renderMap();renderProf()}
+function renderAll(){renderUsers();renderPush();renderRem();renderMap();renderMet();renderChk();renderProf();renderNews()}
 $("#userSel").addEventListener("change",e=>{S.current=e.target.value;confirmDel=false;save();renderAll()});
 $("#addUser").addEventListener("click",()=>{const u={id:uid(),name:"Новый пользователь",birth:"",conds:[],visits:{},organs:{}};S.users.push(u);S.current=u.id;save();renderAll();showTab("prof");setTimeout(()=>$("#pName").select(),0)});
 $("#resetDemo").addEventListener("click",()=>{const id=uid();S={demo:false,current:id,users:[{id,name:"Я",birth:"",conds:[],visits:{},organs:{}}]};save();renderAll();showTab("prof");toast("Данные очищены")});
-function showTab(t){document.querySelectorAll("nav button").forEach(b=>b.setAttribute("aria-selected",b.dataset.tab===t));["rem","map","prof"].forEach(k=>$("#p-"+k).hidden=k!==t)}
+function showTab(t){document.querySelectorAll("nav button").forEach(b=>b.setAttribute("aria-selected",b.dataset.tab===t));["rem","map","met","chk","prof"].forEach(k=>$("#p-"+k).hidden=k!==t);window.scrollTo(0,0)}
 document.querySelectorAll("nav button").forEach(b=>b.addEventListener("click",()=>showTab(b.dataset.tab)));
-renderAll();
+
+/* ---------- приём замеров по ссылке (задел для iPhone «Команд» / Apple Health) ----------
+   Пример: .../karta-zdorovya/?sleep=7.5&weight=66.2&bp=120/80&date=2026-10-16
+   Поддерживается: weight, sleep, sugar, chol, bp. Замер добавляется текущему пользователю. */
+function importFromLink(){
+  let q;try{q=new URLSearchParams(location.search)}catch(e){return}
+  const u=U();u.metrics=u.metrics||{};const d=/^\d{4}-\d{2}-\d{2}$/.test(q.get("date")||"")?q.get("date"):iso(today);const got=[];
+  for(const m of METRICS){const raw=q.get(m.id);if(!raw)continue;
+    if(m.bp){const [s,di]=raw.split("/").map(Number);if(s>di&&di>0){(u.metrics.bp=u.metrics.bp||[]).push({d,s,di});got.push(m.t)}}
+    else{const v=parseFloat(raw.replace(",","."));if(v>0){(u.metrics[m.id]=u.metrics[m.id]||[]).push({d,v:Math.round(v*10)/10});got.push(m.t)}}}
+  if(!got.length)return;save();
+  try{history.replaceState(null,"",location.pathname)}catch(e){}
+  renderMet();showTab("met");toast("Добавлено: "+got.join(", "));
+}
+renderAll();importFromLink();
 </script>
 
 <script>
